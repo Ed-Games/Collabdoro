@@ -1,95 +1,93 @@
+"use client";
+import type { NextPage } from "next";
 import Image from "next/image";
 import styles from "./page.module.scss";
+import logo from "../../public/logo.svg";
+import Head from "next/head";
+import { useRouter } from "next/navigation";
+import { MouseEvent } from "react";
+import { Formik } from "formik";
 
-export default function Home() {
+import { Presentation } from "./login/presentation";
+import { useAuth } from "@/hooks/useAuth";
+import { codeSchema } from "@/validators/roomCodeSchema";
+
+const Home: NextPage = () => {
+  const { user } = useAuth();
+  const Router = useRouter();
+
+  const handleCreateNewRoom = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
+    try {
+      if (!user) {
+        Router.push("/login?redirect_to=/rooms/new");
+      } else {
+        Router.push("/rooms/new");
+      }
+    } catch (error) {
+      return;
+    }
+  };
+
+  const handleJoinRoom = async (code: string) => {
+    if (!user) {
+      Router.push(`/login?redirect_to=/rooms/${code}`);
+    } else {
+      Router.push(`/rooms/${code}`);
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className={styles.container}>
+      <Head>
+        <title>Anydoro | Home</title>
+      </Head>
+      <Presentation />
+
+      <main className={styles.createRoom}>
+        <div className={styles.logo}>
+          <Image src={logo} alt="anydoro-logo" />
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          title="Criar nova sala"
+          onClick={handleCreateNewRoom}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+          Criar sua sala
+        </button>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <div className={styles.divider}>
+          <div className={styles.line} />
+          <span>Ou entre em uma sala</span>
+          <div className={styles.line} />
+        </div>
+        <Formik
+          initialValues={{ code: "" }}
+          onSubmit={(values) => handleJoinRoom(values.code)}
+          validationSchema={codeSchema}
         >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          {({ handleChange, handleSubmit, errors, touched }) => (
+            <form onSubmit={handleSubmit}>
+              <input
+                placeholder="Digitar código..."
+                name="code"
+                onChange={handleChange}
+              />
+              {errors.code && touched.code && (
+                <span className="error">{errors.code}</span>
+              )}
+              <button type="submit" title="Entrar na sala">
+                Entrar na sala
+              </button>
+            </form>
+          )}
+        </Formik>
+      </main>
+    </div>
   );
-}
+};
+
+export default Home;
