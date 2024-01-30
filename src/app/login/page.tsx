@@ -17,7 +17,6 @@ const Login: NextPage = () => {
   const searchParams = useSearchParams();
 
   const handleSignIn = async (type: "google" | "github") => {
-    console.log(type);
     if (type == "google") {
       try {
         await signInWithGoogle();
