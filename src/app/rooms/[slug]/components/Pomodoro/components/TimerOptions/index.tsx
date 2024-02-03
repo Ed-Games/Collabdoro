@@ -1,35 +1,31 @@
 import { Formik } from "formik";
 import styles from "./styles.module.scss";
 import { TimeInput } from "../TimeInput";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Modal } from "../../../Modal";
 import { timerOptionsSchema } from "@/validators/timerOptionsSchema";
-import { secondsToText } from "@/utils/secondsToText";
 import { textToSenconds } from "@/utils/textToSeconds";
-import { useTimer } from "@/hooks/useTimer";
+import { ITimerOptions } from "@/interfaces/timerOptions";
 
 interface ITimerOptionsProps {
   isVisible: boolean;
   setIsVisible: (arg: boolean) => void;
-}
-
-interface ITimerOptions {
-  pomodoro: string;
-  shortBreak: string;
-  longBreak: string;
+  timerOptions: ITimerOptions;
+  setTimerOptions: Dispatch<SetStateAction<ITimerOptions | undefined>>;
 }
 
 export const TimerOptions = ({
   isVisible,
   setIsVisible,
+  timerOptions,
+  setTimerOptions,
 }: ITimerOptionsProps) => {
   const [initialValues, setInitialValues] = useState<ITimerOptions>();
-  const { timerOptions, setTimerOptions } = useTimer();
 
-  const handleSavePomodoroOptions = async(options: ITimerOptions) => {
-    const pomodoro = textToSenconds(options.pomodoro);
-    const shortBreak = textToSenconds(options.shortBreak);
-    const longBreak = textToSenconds(options.longBreak);
+  const handleSavePomodoroOptions = async (options: ITimerOptions) => {
+    const pomodoro = textToSenconds(String(options.pomodoro));
+    const shortBreak = textToSenconds(String(options.shortBreak));
+    const longBreak = textToSenconds(String(options.longBreak));
 
     const timerOptions = {
       pomodoro,
@@ -45,9 +41,9 @@ export const TimerOptions = ({
   useEffect(() => {
     if (timerOptions) {
       setInitialValues({
-        longBreak: secondsToText(timerOptions.longBreak),
-        pomodoro: secondsToText(timerOptions.pomodoro),
-        shortBreak: secondsToText(timerOptions.shortBreak),
+        pomodoro: textToSenconds(String(timerOptions.pomodoro)),
+        shortBreak: textToSenconds(String(timerOptions.shortBreak)),
+        longBreak: textToSenconds(String(timerOptions.longBreak)),
       });
     }
   }, [timerOptions]);
@@ -67,7 +63,7 @@ export const TimerOptions = ({
                 <TimeInput
                   title="Pomodoro"
                   name="pomodoro"
-                  value={values.pomodoro}
+                  value={String(values.pomodoro)}
                   error={errors.pomodoro}
                   showError={touched.pomodoro}
                   onChange={handleChange}
@@ -75,7 +71,7 @@ export const TimerOptions = ({
                 <TimeInput
                   title="Short Break"
                   name="shortBreak"
-                  value={values.shortBreak}
+                  value={String(values.shortBreak)}
                   error={errors.shortBreak}
                   showError={touched.shortBreak}
                   onChange={handleChange}
@@ -83,7 +79,7 @@ export const TimerOptions = ({
                 <TimeInput
                   title="Long Break"
                   name="longBreak"
-                  value={values.longBreak}
+                  value={String(values.longBreak)}
                   error={errors.longBreak}
                   showError={touched.longBreak}
                   onChange={handleChange}
