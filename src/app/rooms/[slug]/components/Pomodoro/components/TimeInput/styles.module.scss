@@ -1,0 +1,18 @@
+.timeInput{
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px;
+  padding: 5px;
+  background: var(--input-background);
+  max-width: 120px;
+
+  svg{
+    z-index: 2;
+  }
+
+  @media(max-width:500px){
+    max-width: 100%;
+    min-width: 100%;
+    justify-content: space-between;
+  }
+}
