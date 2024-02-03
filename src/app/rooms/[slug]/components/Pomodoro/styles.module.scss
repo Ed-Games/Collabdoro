@@ -1,0 +1,110 @@
+.pomodoro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+  gap: 30px;
+
+  .tabs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+
+    button{
+      width: 120px;
+      height: 30px;
+      font-size: 16px;
+      background: var(--white);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .active{
+      color: var(--purple);
+      border: 1px solid var(--purple);
+    }
+  }
+
+  .line{
+    width: 100%;
+    border: 1px solid var(--light-grey);
+  }
+
+  .timer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border-radius: 8px;
+    height: 200px;
+    width: 100%;
+    cursor: default;
+    user-select: none;
+
+    span{
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 150px;
+    }
+  }
+
+  .btnConfig{
+    background: var(--green);
+
+    &:hover{
+      background: var(--neon-green);
+    }
+  }
+
+  .btnStart{
+    background: var(--purple);
+
+    &:hover{
+      background: var(--dark-purple);
+    }
+  }
+
+  .btnStop{
+    background: var(--red);
+
+    &:hover{
+      background: var(--dark-red);
+    }
+  }
+
+  button{
+    width: 100%;
+    height: 80px;
+    font-weight: 600;
+
+    &:disabled{
+      background: var(--grey);
+      cursor: not-allowed;
+
+      &:hover{
+        background: var(--grey);
+      }
+    }
+  }
+
+  @media(max-width: 430px){
+    .timer{
+      span{
+        font-size: 100px;
+      }
+    }
+
+    .tabs{
+      button {
+        width: 90px;
+        font-size: 10px;
+      }
+    }
+  }
+}
