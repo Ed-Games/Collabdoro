@@ -11,7 +11,7 @@ interface ITimerOptionsProps {
   isVisible: boolean;
   setIsVisible: (arg: boolean) => void;
   timerOptions: ITimerOptions;
-  setTimerOptions: Dispatch<SetStateAction<ITimerOptions | undefined>>;
+  setTimerOptions: Dispatch<SetStateAction<ITimerOptions>>;
 }
 
 export const TimerOptions = ({
