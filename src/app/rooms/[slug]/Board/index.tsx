@@ -2,15 +2,14 @@ import Image from "next/image";
 import { FiX } from "react-icons/fi";
 import styles from "./styles.module.scss";
 import { IUser } from "@/interfaces/User";
-import { useUserRoom } from "@/hooks/useUserRoom";
 
 interface IBoardProps {
   users: IUser[];
   currentUser: IUser;
+  onRemoveUser: (userId: string) => void;
 }
 
-export const Board = ({currentUser, users}: IBoardProps) => {
-  const { removeUserFromRoom } = useUserRoom();
+export const Board = ({currentUser, users, onRemoveUser}: IBoardProps) => {
   return (
     <aside className={styles.boardContainer}>
       <div className={styles.tabs}>
@@ -42,7 +41,7 @@ export const Board = ({currentUser, users}: IBoardProps) => {
             </div>
 
             <FiX
-              onClick={() => removeUserFromRoom(user.id)}
+              onClick={() => onRemoveUser(user.id)}
               className={
                 currentUser.isAdmin && currentUser.id !== user.id ? styles.showIcon : ""
               }
