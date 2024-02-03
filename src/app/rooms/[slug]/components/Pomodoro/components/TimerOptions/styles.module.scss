@@ -1,0 +1,67 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    max-width: 80px;
+    height: 34px;
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  span {
+    font-weight: 500;
+  }
+
+  .InputContainer{
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btnContainer {
+    margin-top: 20px;
+
+    button {
+      height: 50px;
+      width: 190px;
+      &:hover {
+        filter: brightness(1.2);
+      }
+      &:first-of-type {
+        background: var(--dark-red);
+      }
+
+      &:last-of-type {
+        background: var(--green);
+      }
+    }
+  }
+
+  @media(max-width:500px){
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+
+    .InputContainer{
+      flex-direction: column;
+      width: 100%;
+
+      span{
+        align-self: flex-start;
+        font-size: 15px;
+        margin-top: 10px;
+      }
+    }
+
+    .btnContainer{
+      flex-direction: column;
+      width: 100%;
+      button{
+        min-width: 100%;
+      }
+    }
+  }
+
+}
