@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
 import { useRoom } from "../../../hooks/useRoom";
 import { toast } from "react-toastify";

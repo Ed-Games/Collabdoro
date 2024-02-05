@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { FiPower, FiShare2 } from "react-icons/fi";
@@ -6,19 +6,18 @@ import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
 import { ConfirmModal } from "../ConfirmModal";
 
-
 interface IHeaderProps {
   isAdmin: boolean;
   onClose: () => void;
 }
 
-const Header = ({isAdmin, onClose}: IHeaderProps) => {
+const Header = ({ isAdmin, onClose }: IHeaderProps) => {
   const [isCloseModalVisible, setIsCloseModalVisible] =
     useState<boolean>(false);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const copyRoomCodeToClipBoard = () => {
-    navigator.clipboard.writeText(router.query.slug as string);
+    navigator.clipboard.writeText(searchParams.get('slug') as string);
     toast.success("Código da sala copiado com sucesso!");
   };
 
@@ -29,20 +28,33 @@ const Header = ({isAdmin, onClose}: IHeaderProps) => {
         Encerrar sala
       </button>
 
-      <FiShare2 size={24} color="var(--purple)" onClick={copyRoomCodeToClipBoard} />
-      <FiPower size={24} color="var(--red)" onClick={() => setIsCloseModalVisible(true)} />
-      { isCloseModalVisible && createPortal(
-        <ConfirmModal
-          title={isAdmin ? 'Encerrar essa sala?' : 'Sair dessa sala?'}
-          description={`Tem certesa que deseja` + isAdmin ? 'encerrar essa sala?' : 'sair dessa sala?'}
-          labelCancel="Não, manter sala"
-          labelConfirm="Sim, cancele a sala"
-          onConfirm={onClose}
-          isVisible={isCloseModalVisible}
-          setIsVisible={setIsCloseModalVisible}
-        />,
-        document.getElementById('room')!
-      )}
+      <FiShare2
+        size={24}
+        color="var(--purple)"
+        onClick={copyRoomCodeToClipBoard}
+      />
+      <FiPower
+        size={24}
+        color="var(--red)"
+        onClick={() => setIsCloseModalVisible(true)}
+      />
+      {isCloseModalVisible &&
+        createPortal(
+          <ConfirmModal
+            title={isAdmin ? "Encerrar essa sala?" : "Sair dessa sala?"}
+            description={
+              `Tem certesa que deseja` + isAdmin
+                ? "encerrar essa sala?"
+                : "sair dessa sala?"
+            }
+            labelCancel="Não, manter sala"
+            labelConfirm="Sim, cancele a sala"
+            onConfirm={onClose}
+            isVisible={isCloseModalVisible}
+            setIsVisible={setIsCloseModalVisible}
+          />,
+          document.getElementById("room")!
+        )}
     </div>
   );
 };
