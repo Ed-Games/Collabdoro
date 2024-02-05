@@ -16,8 +16,7 @@ export const useRoom = () => {
       await set(roomRef, {
         name,
         adminId: userId,
-        createdAt: Date.now(),
-        isActive: false,
+        createdAt: Date.now()
       });
       router.push(`/rooms/${roomRef.key}`);
     } catch (error) {
