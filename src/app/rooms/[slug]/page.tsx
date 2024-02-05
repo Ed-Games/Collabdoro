@@ -35,7 +35,7 @@ const Room: NextPage = () => {
       router.push("/");
       return;
     } else {
-      load(searchParams.get("slug")!);
+      searchParams.get('slug') && load(searchParams.get("slug")!);
     }
   }, [load, router, searchParams, user]);
 
