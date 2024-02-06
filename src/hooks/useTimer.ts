@@ -21,7 +21,7 @@ export const useTimer = () => {
   const seconds = time % 60;
 
   const startTimer = () => {
-    setPomodoroState(Mode.POMODORO, Time.POMODORO, true);
+    setPomodoroState(Mode.POMODORO, timerOptions.pomodoro, true);
   };
 
   const resetTimer = useCallback(() => {
@@ -69,6 +69,10 @@ export const useTimer = () => {
       handleNextStep();
     }
   }, [isActive, time, handleNextStep]);
+
+  useEffect(() => {
+    resetTimer();
+  }, [resetTimer, timerOptions])
 
   return {
     mode,
