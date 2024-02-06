@@ -32,7 +32,6 @@ export const TimerOptions = ({
       shortBreak,
       longBreak,
     };
-    //await handleSetRoomTimerOptions(timerOptions);
     setTimerOptions(timerOptions);
 
     setIsVisible(false);
