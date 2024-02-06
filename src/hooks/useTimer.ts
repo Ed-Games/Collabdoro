@@ -45,6 +45,8 @@ export const useTimer = () => {
         } else {
           setPomodoroState(Mode.LONGBREAK, timerOptions.longBreak);
         }
+
+        setCyclesCount((state) => state + 1);
         break;
 
       case Mode.SHORTBREAK:
@@ -72,7 +74,7 @@ export const useTimer = () => {
 
   useEffect(() => {
     resetTimer();
-  }, [resetTimer, timerOptions])
+  }, [resetTimer, timerOptions]);
 
   return {
     mode,
@@ -85,6 +87,6 @@ export const useTimer = () => {
     seconds,
     isActive,
     startTimer,
-    resetTimer
+    resetTimer,
   };
 };
