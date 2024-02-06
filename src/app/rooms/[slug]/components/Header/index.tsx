@@ -1,4 +1,4 @@
-import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { FiPower, FiShare2 } from "react-icons/fi";
@@ -14,10 +14,10 @@ interface IHeaderProps {
 const Header = ({ isAdmin, onClose }: IHeaderProps) => {
   const [isCloseModalVisible, setIsCloseModalVisible] =
     useState<boolean>(false);
-  const searchParams = useSearchParams();
+  const params = useParams();
 
   const copyRoomCodeToClipBoard = () => {
-    navigator.clipboard.writeText(searchParams.get('slug') as string);
+    navigator.clipboard.writeText(String(params.slug));
     toast.success("Código da sala copiado com sucesso!");
   };
 
