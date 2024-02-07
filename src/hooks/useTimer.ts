@@ -14,7 +14,8 @@ export const useTimer = () => {
   });
 
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [mode, setMode] = useState<string>(Mode.POMODORO);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [mode, setMode] = useState<Mode>(Mode.POMODORO);
   const [cyclesCount, setCyclesCount] = useState<number>(0);
 
   const minutes = Math.floor(time / 60);
@@ -31,10 +32,20 @@ export const useTimer = () => {
     setPomodoroState(Mode.POMODORO, timerOptions.pomodoro, false);
   }, [timerOptions.pomodoro]);
 
-  const setPomodoroState = (mode: Mode, time: Time, isActive = true) => {
+  const togglePauseTimer = useCallback(() => {
+    setPomodoroState(mode, time, !isActive, !isPaused);
+  }, [isActive, isPaused, mode, time]);
+
+  const setPomodoroState = (
+    mode: Mode,
+    time: Time,
+    isActive = true,
+    isPaused = false
+  ) => {
     setMode(mode);
     setTime(time);
     setIsActive(isActive);
+    setIsPaused(isPaused);
   };
 
   const handleNextStep = useCallback(() => {
@@ -86,7 +97,9 @@ export const useTimer = () => {
     minutes,
     seconds,
     isActive,
+    isPaused,
     startTimer,
     resetTimer,
+    togglePauseTimer,
   };
 };

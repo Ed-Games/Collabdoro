@@ -21,17 +21,19 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
     mode,
     startTimer,
     resetTimer,
+    togglePauseTimer,
     cyclesCount,
     isActive,
-    timerOptions, 
-    setTimerOptions
+    isPaused,
+    timerOptions,
+    setTimerOptions,
   } = useTimer();
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, "0").split("");
   const [secondLeft, secondRight] = String(seconds).padStart(2, "0").split("");
 
   const toggleTimer = () => {
-    isActive && isAdmin ? resetTimer() : startTimer();
+    isActive && isAdmin ? togglePauseTimer() : startTimer();
     !isActive && startAudioRef.current?.play();
   };
 
@@ -92,31 +94,40 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
       </div>
 
       {!isActive && isAdmin && (
-        <button
-          onClick={() => setOpenConfigModal(true)}
-          className={styles.btnConfig}
-        >
-          Configurar ciclo
-        </button>
+        <>
+          <button
+          disabled={isPaused}
+            onClick={() => setOpenConfigModal(true)}
+            className={styles.btnConfig}
+          >
+            Configurar ciclo
+          </button>
+          <button onClick={ isPaused ? togglePauseTimer : startTimer} className={styles.btnStart}>
+            {isPaused ? 'Continuar' : 'Iniciar'}
+          </button>
+        </>
       )}
 
       {isActive && <Progressbar value={(cyclesCount / 4) * 100} />}
 
-      <button
-        disabled={!isAdmin}
-        onClick={toggleTimer}
-        className={!isActive ? styles.btnStart : styles.btnStop}
-      >
-        {isActive ? "Cancelar" : "Iniciar ciclo"}
-      </button>
-      {
-        timerOptions && <TimerOptions
-        isVisible={openConfigModal}
-        setIsVisible={setOpenConfigModal}
-        timerOptions={timerOptions}
-        setTimerOptions={setTimerOptions}
-      />
-      }
+      {isActive && (
+        <>
+          <button className={styles.btnConfig} onClick={togglePauseTimer}>
+            Pausar
+          </button>
+          <button className={styles.btnStop} onClick={resetTimer}>
+            Cancelar
+          </button>
+        </>
+      )}
+      {timerOptions && (
+        <TimerOptions
+          isVisible={openConfigModal}
+          setIsVisible={setOpenConfigModal}
+          timerOptions={timerOptions}
+          setTimerOptions={setTimerOptions}
+        />
+      )}
       <audio ref={notificationAudioRef as any} src="/notification-sound.mp3" />
       <audio ref={startAudioRef as any} src="/start-sound.mp3" />
     </div>
