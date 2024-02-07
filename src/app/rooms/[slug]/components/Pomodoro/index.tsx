@@ -29,13 +29,13 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
     setTimerOptions,
   } = useTimer();
 
+  const handleStartTimer = () => {
+    startTimer();
+    startAudioRef.current?.play();
+  }
+
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, "0").split("");
   const [secondLeft, secondRight] = String(seconds).padStart(2, "0").split("");
-
-  const toggleTimer = () => {
-    isActive && isAdmin ? togglePauseTimer() : startTimer();
-    !isActive && startAudioRef.current?.play();
-  };
 
   useEffect(() => {
     switch (mode) {
@@ -96,14 +96,17 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
       {!isActive && isAdmin && (
         <>
           <button
-          disabled={isPaused}
+            disabled={isPaused}
             onClick={() => setOpenConfigModal(true)}
             className={styles.btnConfig}
           >
             Configurar ciclo
           </button>
-          <button onClick={ isPaused ? togglePauseTimer : startTimer} className={styles.btnStart}>
-            {isPaused ? 'Continuar' : 'Iniciar'}
+          <button
+            onClick={isPaused ? togglePauseTimer : handleStartTimer}
+            className={styles.btnStart}
+          >
+            {isPaused ? "Continuar" : "Iniciar"}
           </button>
         </>
       )}
