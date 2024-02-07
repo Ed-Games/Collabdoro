@@ -5,6 +5,7 @@ import { Mode } from "@/enums";
 import { Progressbar } from "./components/ProgressBar";
 import { TimerOptions } from "./components/TimerOptions";
 import { useTimer } from "@/hooks/useTimer";
+import { TimerDisplay } from "./TimerDisplay";
 
 interface IPomodoroProps {
   isAdmin: boolean;
@@ -85,13 +86,7 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
 
       <div className={styles.line}></div>
 
-      <div className={styles.timer}>
-        <span>
-          {minuteLeft}
-          {minuteRight}:{secondLeft}
-          {secondRight}
-        </span>
-      </div>
+      <TimerDisplay minutes={minutes} seconds={seconds} />
 
       {!isActive && isAdmin && (
         <>
