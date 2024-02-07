@@ -6,6 +6,7 @@ import { Progressbar } from "./components/ProgressBar";
 import { TimerOptions } from "./components/TimerOptions";
 import { useTimer } from "@/hooks/useTimer";
 import { TimerDisplay } from "./TimerDisplay";
+import { ModeTabs } from "./components/ModeTabs";
 
 interface IPomodoroProps {
   isAdmin: boolean;
@@ -68,17 +69,7 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
 
   return (
     <div className={styles.pomodoro}>
-      <div className={styles.tabs}>
-        <button className={mode == Mode.POMODORO ? styles.active : ""}>
-          Pomodoro
-        </button>
-        <button className={mode == Mode.SHORTBREAK ? styles.active : ""}>
-          Short Break
-        </button>
-        <button className={mode == Mode.LONGBREAK ? styles.active : ""}>
-          Long Break
-        </button>
-      </div>
+      <ModeTabs currentMode={mode} onModeChange={() => {}} />
 
       <div className={styles.line}></div>
 

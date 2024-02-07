@@ -1,0 +1,23 @@
+.tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+
+  button {
+    cursor: default;
+    width: 120px;
+    height: 30px;
+    font-size: 16px;
+    background: var(--white);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .active {
+    color: var(--purple);
+    border: 1px solid var(--purple);
+  }
+}
