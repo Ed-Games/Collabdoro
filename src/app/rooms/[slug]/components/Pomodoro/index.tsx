@@ -35,9 +35,6 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
     startAudioRef.current?.play();
   }
 
-  const [minuteLeft, minuteRight] = String(minutes).padStart(2, "0").split("");
-  const [secondLeft, secondRight] = String(seconds).padStart(2, "0").split("");
-
   useEffect(() => {
     switch (mode) {
       case Mode.LONGBREAK:
@@ -57,7 +54,6 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
         }
         break;
       default:
-        // handle default case here
         break;
     }
   }, [mode, isActive]);
