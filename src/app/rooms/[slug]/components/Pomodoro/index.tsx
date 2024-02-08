@@ -7,6 +7,7 @@ import { TimerOptions } from "./components/TimerOptions";
 import { useTimer } from "@/hooks/useTimer";
 import { TimerDisplay } from "./TimerDisplay";
 import { ModeTabs } from "./components/ModeTabs";
+import ControlButtons from "./components/ControlButtons";
 
 interface IPomodoroProps {
   isAdmin: boolean;
@@ -75,36 +76,17 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
 
       <TimerDisplay minutes={minutes} seconds={seconds} />
 
-      {!isActive && isAdmin && (
-        <>
-          <button
-            disabled={isPaused}
-            onClick={() => setOpenConfigModal(true)}
-            className={styles.btnConfig}
-          >
-            Configurar ciclo
-          </button>
-          <button
-            onClick={isPaused ? togglePauseTimer : handleStartTimer}
-            className={styles.btnStart}
-          >
-            {isPaused ? "Continuar" : "Iniciar"}
-          </button>
-        </>
-      )}
-
       {isActive && <Progressbar value={(cyclesCount / 4) * 100} />}
 
-      {isActive && (
-        <>
-          <button className={styles.btnConfig} onClick={togglePauseTimer}>
-            Pausar
-          </button>
-          <button className={styles.btnStop} onClick={resetTimer}>
-            Cancelar
-          </button>
-        </>
-      )}
+      <ControlButtons
+        isActive={isActive}
+        isAdmin={isAdmin}
+        isPaused={isPaused}
+        onCancel={resetTimer}
+        onConfigure={() => setOpenConfigModal(true)}
+        onPause={togglePauseTimer}
+        onStart={handleStartTimer}
+      />
 
       <TimerOptions
         isVisible={openConfigModal}
