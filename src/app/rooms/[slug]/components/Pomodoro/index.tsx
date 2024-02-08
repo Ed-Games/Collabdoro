@@ -34,7 +34,7 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
   const handleStartTimer = () => {
     startTimer();
     startAudioRef.current?.play();
-  }
+  };
 
   useEffect(() => {
     switch (mode) {
@@ -105,14 +105,13 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
           </button>
         </>
       )}
-      {timerOptions && (
-        <TimerOptions
-          isVisible={openConfigModal}
-          setIsVisible={setOpenConfigModal}
-          timerOptions={timerOptions}
-          setTimerOptions={setTimerOptions}
-        />
-      )}
+
+      <TimerOptions
+        isVisible={openConfigModal}
+        setIsVisible={setOpenConfigModal}
+        timerOptions={timerOptions}
+        setTimerOptions={setTimerOptions}
+      />
       <audio ref={notificationAudioRef as any} src="/notification-sound.mp3" />
       <audio ref={startAudioRef as any} src="/start-sound.mp3" />
     </div>
