@@ -76,7 +76,7 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
 
       <TimerDisplay minutes={minutes} seconds={seconds} />
 
-      {isActive && <Progressbar value={(cyclesCount / 4) * 100} />}
+      <Progressbar isActive={isActive} value={(cyclesCount / 4) * 100} />
 
       <ControlButtons
         isActive={isActive}
