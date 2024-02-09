@@ -14,7 +14,7 @@ import Header from "./components/Header";
 import { useParams } from "next/navigation";
 import { Board } from "./Board";
 import { useUserRoom } from "@/hooks/useUserRoom";
-import Pomodoro from "./components/Pomodoro";
+import { AdminPomodoro } from "./components/Pomodoro";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 interface IParams extends Params {
@@ -52,7 +52,7 @@ const Room: NextPage = () => {
 
       <Header isAdmin={user?.id === room.adminId} onClose={closeRoom} />
 
-      <Pomodoro isAdmin={user?.id === room.adminId} />
+      <AdminPomodoro />
 
       {user && users && (
         <Board

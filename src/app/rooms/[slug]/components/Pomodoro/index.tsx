@@ -9,11 +9,7 @@ import { TimerDisplay } from "./TimerDisplay";
 import { ModeTabs } from "./components/ModeTabs";
 import ControlButtons from "./components/ControlButtons";
 
-interface IPomodoroProps {
-  isAdmin: boolean;
-}
-
-const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
+export const AdminPomodoro = () => {
   const [openConfigModal, setOpenConfigModal] = useState<boolean>(false);
   const notificationAudioRef = useRef<HTMLAudioElement>();
   const startAudioRef = useRef<HTMLAudioElement>();
@@ -80,7 +76,7 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
 
       <ControlButtons
         isActive={isActive}
-        isAdmin={isAdmin}
+        isAdmin
         isPaused={isPaused}
         onCancel={resetTimer}
         onConfigure={() => setOpenConfigModal(true)}
@@ -99,5 +95,3 @@ const Pomodoro = ({ isAdmin }: IPomodoroProps) => {
     </div>
   );
 };
-
-export default Pomodoro;
