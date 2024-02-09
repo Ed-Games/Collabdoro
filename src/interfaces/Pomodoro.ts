@@ -1,7 +1,12 @@
+import { Mode } from "@/enums";
+
 export interface IPomodoro {
-  currentTimerMode?: string;
-  currentTimerValue?: number;
+  isActive: boolean;
+  isPaused: boolean;
+  mode: Mode;
   pomodoro: number;
   shortBreak: number;
   longBreak: number;
+  created_at: Date;
+  updated_at: Date;
 }
